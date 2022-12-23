@@ -1,209 +1,224 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Test Schedule</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-<head>
-  <meta charset="utf-8" />
-  <title>Test Schedule</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-    }
+      body {
+        font-family: sans-serif;
+      }
 
-    body {
-      font-family: sans-serif;
-    }
+      form {
+        display: block;
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+      }
 
-    form {
-      display: block;
-      margin-top: 20px;
-      display: flex;
-      gap: 10px;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-    }
+      form#fk {
+        flex-direction: column;
+        max-width: 60ch;
+        margin: 200px auto 0 auto;
+        margin: 10px 0 0 0;
+      }
 
-    form#fk {
-      flex-direction: column;
-      max-width: 60ch;
-      margin: 200px auto 0 auto;
-      margin: 10px 0 0 0;
-    }
+      form#fk > textarea {
+        width: 100%;
+      }
 
-    form#fk>textarea {
-      width: 100%
-    }
+      input[type="text"],
+      textarea[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
 
-    input[type='text'],
-    textarea[type='text'] {
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+      button {
+        padding: 10px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
 
-    button {
-      padding: 10px;
-      font-size: 16px;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+      #schedule {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+        width: max(600px, 70%);
+        margin: 0 auto;
+      }
 
-    #schedule {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-      width: max(600px, 70%);
-      margin: 0 auto;
-    }
+      .test-session {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background: #eeeeee;
+        padding: 16px;
+        border-radius: 8px;
+      }
 
-    .test-session {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      background: #eeeeee;
-      padding: 16px;
-      border-radius: 8px;
-    }
+      .test-session > div {
+        flex: 1;
+        text-align: center;
+      }
 
-    .test-session>div {
-      flex: 1;
-      text-align: center;
-    }
+      .test-session > div:first-child {
+        text-align: left;
+      }
 
-    .test-session>div:first-child {
-      text-align: left;
-    }
+      .test-session > div:last-child {
+        text-align: right;
+      }
 
-    .test-session>div:last-child {
-      text-align: right;
-    }
+      span {
+        font-weight: bold;
+        color: #00a4aa;
+      }
 
-    span {
-      font-weight: bold;
-      color: #00a4aa;
-    }
+      .hidden {
+        opacity: 0;
+        display: none;
+        transform: scale(0.2) skew(180deg);
+      }
 
-    .hidden {
-      opacity: 0;
-      display: none;
-      transform: scale(0.2) skew(180deg);
-    }
+      .fk {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+      }
 
-    .fk {
-      position: absolute;
-      left: 10px;
-      bottom: 10px;
-    }
+      #tog,
+      #content {
+        display: none;
+      }
 
-    #tog,
-    #content {
-      display: none
-    }
+      #toglabel::before {
+        content: "▶";
+      }
 
-    #toglabel::before {
-      content: "▶";
-    }
+      #tog:checked + #toglabel + #content {
+        display: block;
+      }
 
-    #tog:checked + #toglabel + #content {
-      display: block
-    }
+      #tog:checked + #toglabel::before {
+        content: "▼";
+      }
 
-    #tog:checked + #toglabel::before {
-      content: "▼";
-    }
+      .info {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
+      .info > a {
+        text-decoration: none;
+      }
+      .info > a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
 
-    .info {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-    }
-    .info > a {
-      text-decoration: none;
-    }
-    .info > a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-
-<body>
-  <form>
-    <label for="student-name">输入学生全名：</label>
-    <input type="text" id="student-name" />
-    <button type="submit">查找考试信息</button>
-  </form>
-  <div id="schedule"></div>
-  <div class="info">
-    Open Sourced <a href="https://github.com/plushugh/examschedule">@plushugh</a>
-  </div>
-  <div class="fk">
-    <input type="checkbox" id="tog" />
-    <label id="toglabel" for="tog">反馈/免责声明</label>
-    <div id="content">
-      <p>免责声明：本服务提供的考试信息仅供参考，不一定反映真实考试信息，具体请参照官方公布的考试信息。</p>
-      <form netlify netlify-honeypot="bot-field" id="fk">
-        <p class="hidden">
-          <label>
-            如果你是人类，请不要填写此框: <input name="bot-field" />
-          </label>
-        </p>
-        <textarea type="text" placeholder="请输入反馈" rows="10" resize="false"></textarea>
-        <button type="submit">
-          提交反馈
-        </button>
-      </form>
+  <body>
+    <form>
+      <label for="student-name">输入学生全名：</label>
+      <input type="text" id="student-name" />
+      <button type="submit">查找考试信息</button>
+    </form>
+    <div id="schedule"></div>
+    <div class="info">
+      Open Sourced
+      <a href="https://github.com/plushugh/examschedule">@plushugh</a>
     </div>
-  </div>
-  <script>
-    fetch("/testSessionsByStudent.json").then(res => res.json()).then(testSessionsByStudent => {
-      const form = document.querySelector('form');
-      const schedule = document.querySelector('#schedule');
+    <div class="fk">
+      <input type="checkbox" id="tog" />
+      <label id="toglabel" for="tog">反馈/免责声明</label>
+      <div id="content">
+        <p>
+          免责声明：本服务提供的考试信息仅供参考，不一定反映真实考试信息，具体请参照官方公布的考试信息。
+        </p>
+        <form netlify netlify-honeypot="bot-field" id="fk">
+          <p class="hidden">
+            <label>
+              如果你是人类，请不要填写此框: <input name="bot-field" />
+            </label>
+          </p>
+          <textarea
+            type="text"
+            name="fankui"
+            placeholder="请输入反馈"
+            rows="10"
+            resize="false"
+          ></textarea>
+          <button type="submit">提交反馈</button>
+        </form>
+      </div>
+    </div>
+    <script>
+      fetch("/testSessionsByStudent.json")
+        .then((res) => res.json())
+        .then((testSessionsByStudent) => {
+          const form = document.querySelector("form");
+          const schedule = document.querySelector("#schedule");
 
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
+          form.addEventListener("submit", (event) => {
+            event.preventDefault();
 
-        schedule.innerHTML = '';
+            schedule.innerHTML = "";
 
-        const studentName = document.querySelector('#student-name').value;
+            const studentName = document.querySelector("#student-name").value;
 
-        const testSessions = testSessionsByStudent[studentName];
+            const testSessions = testSessionsByStudent[studentName];
 
-        if (testSessions) {
-          for (const session of testSessions) {
-            const dateTime = `${session['examdate']} ${session.examtime}`;
-            schedule.innerHTML += `
+            if (testSessions) {
+              for (const session of testSessions) {
+                const dateTime = `${session["examdate"]} ${session.examtime}`;
+                schedule.innerHTML += `
               <div class="test-session">
               <div class="meta">
-              <div>${dateTime}<br><span>时长：</span> ${session.minutes} <span>分钟</span></div>
+              <div>${dateTime}<br><span>时长：</span> ${
+                  session.minutes
+                } <span>分钟</span></div>
                 <div>${session.subject}</div>
                 <div>${session.grade} ${session.classNum}</div>
                 <div>${session.teacher}</div>
               </div>
-              <div><span>考试学生：</span>${session.students && session.students.join(", ")}  <span>共计</span>${session.numberOfPeople}<span>人</span></div>
-              <div><span>由</span>${session.proctor1}<span>和</span>${session.proctor2}<span>监考</span>
+              <div><span>考试学生：</span>${
+                session.students && session.students.join(", ")
+              }  <span>共计</span>${session.numberOfPeople}<span>人</span></div>
+              <div><span>由</span>${session.proctor1}<span>和</span>${
+                  session.proctor2
+                }<span>监考</span>
               <div><span>钉钉群名称：</span>${session.groupChatName}</div>
               </div>
             `;
-          }
-        } else {
-          schedule.innerHTML = '<p class="err">没有查找到考试信息</p>';
-        }
-      });
-    }).catch((err) => {
-      document.querySelector("body").innerHTML = '<p class="err">无法获取考试信息</p>';
-    })
-  </script>
-</body>
-
+              }
+            } else {
+              schedule.innerHTML = '<p class="err">没有查找到考试信息</p>';
+            }
+          });
+        })
+        .catch((err) => {
+          document.querySelector("body").innerHTML =
+            '<p class="err">无法获取考试信息</p>';
+        });
+    </script>
+  </body>
 </html>
