@@ -1,8 +1,9 @@
 # Usage
 
 ## Strip BOM from csv file
+### note input file is named `test.csv`
 ```bash
-npm run strip-bom test.csv > testbom.csv
+npm run strip-bom
 ```
 
 ## Generate preindexed json

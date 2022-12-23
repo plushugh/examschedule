@@ -11,7 +11,7 @@
   "license": "MIT",
   "scripts": {
     "generate": "ts-node ./src/cli.ts",
-    "strip-bom": "strip-bom"
+    "strip-bom": "strip-bom test.csv > testbom.csv"
   },
   "devDependencies": {
     "@types/node": "^18.11.17",
