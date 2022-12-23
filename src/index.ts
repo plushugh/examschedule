@@ -23,7 +23,6 @@ export function processFile(inputFilename: string, outputFilename: string) {
     .pipe(csv())
     // for each row, add the test session to the student's list of test sessions
     .on("data", (row) => {
-      console.log(row);
       const examdate = row["examdate"];
       const examtime = row.examtime;
       const subject = row.subject;
