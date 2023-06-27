@@ -5,14 +5,11 @@ interface TestSession {
   examdate: string;
   examtime: string;
   subject: string;
-  grade: string;
-  classNum: string;
   minutes: string;
-  groupChatName: string;
+  location: string;
   numberOfPeople: string;
   proctor1: string;
   proctor2: string;
-  teacher: string;
   students: string[];
 }
 
@@ -26,15 +23,12 @@ export function processFile(inputFilename: string, outputFilename: string) {
       const examdate = row["examdate"];
       const examtime = row.examtime;
       const subject = row.subject;
-      const grade = row.grade;
-      const classNum = row.classnum;
       const minutes = row.minutes;
-      const groupChatName = row.group_chat_name;
+      const location = row.location;
       const numberOfPeople = row.number_of_people;
       const proctor1 = row.proctor1;
       const proctor2 = row.proctor2;
-      const teacher = row.teacher;
-      const students = Object.values(row).slice(11); // slice off the first 11 columns to get the student names
+      const students = Object.values(row).slice(9); // slice off the first 11 columns to get the student names
 
       for (const student of <string[]>students) {
         if (!testSessionsByStudent[student]) {
@@ -45,16 +39,11 @@ export function processFile(inputFilename: string, outputFilename: string) {
           examdate,
           examtime,
           subject,
-          grade,
-          classNum,
+          location,
           minutes,
-          groupChatName,
           numberOfPeople,
           proctor1,
           proctor2,
-          teacher: teacher.endsWith("、examaffairs@brs.edu.cn")
-            ? teacher.slice(0, -23)
-            : teacher,
           students: <string[]>(
             students.filter((str: string) => str.trim() !== "")
           ),
@@ -65,7 +54,8 @@ export function processFile(inputFilename: string, outputFilename: string) {
       // output it as a JSON file
       fs.writeFileSync(
         outputFilename,
-        JSON.stringify(testSessionsByStudent, null, 2)
+        // JSON.stringify(testSessionsByStudent, null, 2)
+        JSON.stringify(testSessionsByStudent) // saves bytes
       );
     });
 }

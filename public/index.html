@@ -17,6 +17,18 @@
       body {
         font-family: sans-serif;
       }
+      h1 {
+        text-align: center;
+        font-size: 32px;
+        margin: 48px 0 10px;
+        padding: 0;
+        font-weight: 700;
+      }
+      small {
+        display: block;
+        margin: 0 0 24px 0;
+        text-align: center;
+      }
 
       form {
         display: block;
@@ -29,10 +41,15 @@
         margin-bottom: 20px;
       }
 
+      @media (max-width: 600px) {
+        form {
+          flex-direction: column;
+        }
+      }
+
       form#fk {
         flex-direction: column;
         max-width: 60ch;
-        margin: 200px auto 0 auto;
         margin: 10px 0 0 0;
       }
 
@@ -63,29 +80,50 @@
         gap: 10px;
         grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
         width: max(600px, 70%);
-        margin: 0 auto;
+        margin: 64px auto;
       }
 
       .test-session {
-        display: flex;
-        flex-direction: row;
+        display: grid;
         align-items: center;
         background: #eeeeee;
         padding: 16px;
         border-radius: 8px;
+        grid-template-areas:
+          "meta meta"
+          "students students"
+          "location proctors";
       }
-
-      .test-session > div {
-        flex: 1;
-        text-align: center;
-      }
-
       .test-session > div:first-child {
         text-align: left;
+        grid-area: meta;
       }
 
+      .test-session > div:nth-child(2) {
+        text-align: left;
+        grid-area: students;
+      }
+
+      .test-session > div:nth-last-child(2) {
+        text-align: left;
+        grid-area: location;
+      }
       .test-session > div:last-child {
         text-align: right;
+        grid-area: proctors;
+      }
+      @media (max-width: 700px) {
+        .test-session {
+          grid-template-areas:
+            "meta"
+            "students"
+            "location"
+            "proctors";
+        }
+        .test-session > div:last-child {
+          text-align: left;
+          grid-area: proctors;
+        }
       }
 
       span {
@@ -100,9 +138,12 @@
       }
 
       .fk {
-        position: absolute;
+        position: fixed;
         left: 10px;
         bottom: 10px;
+        background: white;
+        border-radius: 12px;
+        max-width: 45ch;
       }
 
       #tog,
@@ -123,7 +164,7 @@
       }
 
       .info {
-        position: absolute;
+        position: fixed;
         bottom: 10px;
         right: 10px;
       }
@@ -133,10 +174,30 @@
       .info > a:hover {
         text-decoration: underline;
       }
+
+      .gh {
+        margin: 10px;
+        position: fixed;
+        top: 0;
+        right: 0;
+      }
     </style>
   </head>
 
   <body>
+    <div class="gh">
+      <a
+        class="github-button"
+        href="https://github.com/plushugh/examschedule"
+        data-size="large"
+        data-show-count="true"
+        aria-label="Star plushugh/examschedule on GitHub"
+        >Star this project on GitHub</a
+      >
+    </div>
+    <h1>查找考试时刻表</h1>
+    <small>Updated Jun 27, 2023, 18:48:35 UTC+8</small>
+    <small>如果查不到，请使用希悦档案的名字查询</small>
     <form>
       <label for="student-name">输入学生全名：</label>
       <input type="text" id="student-name" />
@@ -144,8 +205,11 @@
     </form>
     <div id="schedule"></div>
     <div class="info">
-      Open Sourced
+      这是一个
+      <a href="https://fsf.org">自由软件</a>
+      项目，由
       <a href="https://github.com/plushugh/examschedule">@plushugh</a>
+      开发
     </div>
     <div class="fk">
       <input type="checkbox" id="tog" />
@@ -192,21 +256,30 @@
                 const dateTime = `${session["examdate"]} ${session.examtime}`;
                 schedule.innerHTML += `
               <div class="test-session">
-              <div class="meta">
-              <div>${dateTime}<br><span>时长：</span> ${
+                <div>
+                  <div>
+                    ${dateTime}<br><span>时长：</span> ${
                   session.minutes
-                } <span>分钟</span></div>
-                <div>${session.subject}</div>
-                <div>${session.grade} ${session.classNum}</div>
-                <div>${session.teacher}</div>
-              </div>
-              <div><span>考试学生：</span>${
-                session.students && session.students.join(", ")
-              }  <span>共计</span>${session.numberOfPeople}<span>人</span></div>
-              <div><span>由</span>${session.proctor1}<span>和</span>${
+                } <span>分钟</span>
+                  </div>
+                  <div>${session.subject}</div>
+                </div>
+
+                <div>
+                  <span>考试学生：</span>${
+                    session.students && session.students.join(", ")
+                  }  <span>共计</span>${session.numberOfPeople}<span>人</span>
+                </div>
+
+                <div>
+                  <span>考试地点：</span>${session.location}
+                </div>
+
+                <div>
+                  <span>由</span>${session.proctor1}<span>和</span>${
                   session.proctor2
                 }<span>监考</span>
-              <div><span>钉钉群名称：</span>${session.groupChatName}</div>
+                </div>
               </div>
             `;
               }
@@ -220,5 +293,6 @@
             '<p class="err">无法获取考试信息</p>';
         });
     </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
