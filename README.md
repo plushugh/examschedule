@@ -27,7 +27,7 @@ Application.DisplayAlerts = True
 Application.ScreenUpdating = True
 End Sub
 ```
-credit: Extendoffice
+<!-- credit: Extendoffice -->
 4. Select all cells
 5. Use F5 to run the script
 6. Export csv
