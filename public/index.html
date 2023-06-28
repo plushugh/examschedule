@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
+    <meta name="description" content="查询个人考试时间和地点" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Test Schedule</title>
     <style>
       * {
@@ -16,6 +19,7 @@
 
       body {
         font-family: sans-serif;
+        font-size: 16px;
       }
       h1 {
         text-align: center;
@@ -31,7 +35,6 @@
       }
 
       form {
-        display: block;
         margin-top: 20px;
         display: flex;
         gap: 10px;
@@ -44,6 +47,7 @@
       @media (max-width: 600px) {
         form {
           flex-direction: column;
+          gap: 20px;
         }
       }
 
@@ -55,44 +59,72 @@
 
       form#fk > textarea {
         width: 100%;
+
+        box-shadow: none;
+      }
+
+      button,
+      input {
+        outline: none;
       }
 
       input[type="text"],
       textarea[type="text"] {
         padding: 10px;
-        font-size: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
+        font-size: 14px;
+        line-height: 14px;
+        border: 2px solid #000;
+        box-shadow: 3px 2px 0 #000;
+        transition: all 0.2s ease-in-out;
       }
 
       button {
         padding: 10px;
         font-size: 16px;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        border-radius: 4px;
+        line-height: 16px;
+        background-color: #cdfeff;
+        border: 2px solid #007779;
+        box-shadow: 3px 2px 0 #007779;
+        transition: all 0.2s ease-in-out;
         cursor: pointer;
+      }
+
+      input[type="text"]:hover,
+      textarea[type="text"]:hover,
+      input[type="text"]:active,
+      textarea[type="text"]:active,
+      button:active,
+      button:hover {
+        outline: none;
+        border: 2px solid #00a4aa;
+        box-shadow: 6px 4px 0 #00a4aa;
       }
 
       #schedule {
         display: grid;
         gap: 10px;
-        grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-        width: max(600px, 70%);
+        grid-template-columns: repeat(auto-fit, minmax(min(90vw, 500px), 1fr));
+        width: 90%;
+        max-width: 130ch;
         margin: 64px auto;
       }
 
       .test-session {
         display: grid;
         align-items: center;
-        background: #eeeeee;
+        background: #fff;
         padding: 16px;
-        border-radius: 8px;
+        border: 2px solid #000;
+        box-shadow: 3px 2px 0 #000;
+        transition: all 0.2s ease-in-out;
+
         grid-template-areas:
           "meta meta"
           "students students"
           "location proctors";
+      }
+      .test-session:hover {
+        box-shadow: 6px 4px 0 #000;
       }
       .test-session > div:first-child {
         text-align: left;
@@ -139,11 +171,26 @@
 
       .fk {
         position: fixed;
-        left: 10px;
-        bottom: 10px;
-        background: white;
-        border-radius: 12px;
+        left: 0;
+        bottom: 0;
+        margin: 10px;
+        background-color: #fff;
+        border: 2px solid #000;
+        box-shadow: 3px 2px 0 #000;
+        transition: all 0.2s ease-in-out;
+
+        padding: 10px;
         max-width: 45ch;
+
+        z-index: 100;
+      }
+      .fk:hover {
+        box-shadow: 6px 4px 0 #000;
+      }
+
+      #tog,
+      #toglabel {
+        cursor: pointer;
       }
 
       #tog,
@@ -155,19 +202,30 @@
         content: "▶";
       }
 
-      #tog:checked + #toglabel + #content {
-        display: block;
-      }
-
       #tog:checked + #toglabel::before {
         content: "▼";
+      }
+
+      #tog:checked + #toglabel + #content {
+        display: block;
       }
 
       .info {
         position: fixed;
         bottom: 10px;
         right: 10px;
+        background-color: #fff;
+        border: 2px solid #000;
+        box-shadow: 3px 2px 0 #000;
+        transition: all 0.2s ease-in-out;
+        padding: 10px;
+
+        z-index: 50;
       }
+      .info:hover {
+        box-shadow: 6px 4px 0 #000;
+      }
+
       .info > a {
         text-decoration: none;
       }
@@ -180,6 +238,32 @@
         position: fixed;
         top: 0;
         right: 0;
+      }
+
+      p.err {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid #000;
+        box-shadow: 3px 2px 0 #000;
+        padding: 10px;
+        font-size: 24px;
+        font-weight: 700;
+        transition: all 0.2s ease-in-out;
+      }
+      p.err:hover {
+        box-shadow: 6px 4px 0 #000;
+      }
+
+      @media (max-width: 600px) {
+        .info {
+          bottom: 66.5px;
+          left: 0;
+          margin: 10px;
+          right: unset;
+        }
       }
     </style>
   </head>
@@ -196,11 +280,13 @@
       >
     </div>
     <h1>查找考试时刻表</h1>
-    <small>Updated Jun 27, 2023, 18:48:35 UTC+8</small>
+    <small>Updated Jun 28, 2023, 16:58:50 UTC+8</small>
     <small>如果查不到，请使用希悦档案的名字查询</small>
     <form>
+      <!--
       <label for="student-name">输入学生全名：</label>
-      <input type="text" id="student-name" />
+      -->
+      <input type="text" id="student-name" placeholder="请输入学生全名" />
       <button type="submit">查找考试信息</button>
     </form>
     <div id="schedule"></div>
@@ -253,7 +339,7 @@
 
             if (testSessions) {
               for (const session of testSessions) {
-                const dateTime = `${session["examdate"]} ${session.examtime}`;
+                const dateTime = `${session["examDate"]} ${session.examTime}`;
                 schedule.innerHTML += `
               <div class="test-session">
                 <div>
@@ -262,13 +348,13 @@
                   session.minutes
                 } <span>分钟</span>
                   </div>
-                  <div>${session.subject}</div>
+                  <div>${session.subject} ${session.classNum}</div>
                 </div>
 
                 <div>
                   <span>考试学生：</span>${
                     session.students && session.students.join(", ")
-                  }  <span>共计</span>${session.numberOfPeople}<span>人</span>
+                  }  <span>共计</span>${session.numOfStudents}<span>人</span>
                 </div>
 
                 <div>
@@ -293,11 +379,15 @@
             '<p class="err">无法获取考试信息</p>';
         });
     </script>
-    <script src="https://beamanalytics.b-cdn.net/beam.min.js" data-token="7fb81829-48b9-4fb6-9041-c11a9106b3a0" async></script>
+    <script
+      src="https://beamanalytics.b-cdn.net/beam.min.js"
+      data-token="7fb81829-48b9-4fb6-9041-c11a9106b3a0"
+      async
+    ></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script
-  src="https://js.sentry-cdn.com/43a5ab60e8a840938d607d3e3e18b424.min.js"
-  crossorigin="anonymous"
-></script>
+      src="https://js.sentry-cdn.com/43a5ab60e8a840938d607d3e3e18b424.min.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
