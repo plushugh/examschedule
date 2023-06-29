@@ -1,8 +1,19 @@
-# Usage
+# Examschedule
+Look up your test schedules without pain
 
-## Delete header rows in excel
+## Usage
+Deployed on Netlify: Http://exam.radio-club.org/
 
-## Spread merged cells using VBA script
+## Building from source
+
+### Prerequisites
+
+- Node.js & npm >= 18
+- Deno >= 1.34.0
+
+#### Delete header rows in excel
+
+#### Spread merged cells using VBA script
 
 1. Alt + F11
 2. Insert > Module
@@ -33,7 +44,7 @@ End Sub
 2. Use F5 to run the script
 3. Export csv as `test.csv`
 
-## Open csv and add column names
+#### Open csv and add column names
 
 1. Open csv in textedit
 2. add this to an extra top line:
@@ -44,7 +55,7 @@ examDate,examTime,subject,classNum,minutes,location,proctor1,proctor2,numOfStude
 
 1. rename csv as `source.csv` and copy to this folder
 
-## Strip BOM from csv file
+#### Strip BOM from csv file
 
 ```bash
 npm install
@@ -53,7 +64,7 @@ npm run strip-bom
 
 > this npm script generates a new file `input.csv`
 
-## Generate preindexed json
+#### Generate preindexed json
 
 ```bash
 npm run generate-json
@@ -61,6 +72,6 @@ npm run generate-json
 
 > this npm script reads `input.csv` and generates a new file in `public/` as `testSessionsByStudent.json`
 
-## Deploy webapp from `public/` directory
+#### Deploy webapp from `public/` directory
 
 Use netlify, since this app uses netlify forms for form collection.
