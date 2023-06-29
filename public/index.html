@@ -24,10 +24,14 @@
       h1 {
         text-align: center;
         font-size: 32px;
-        margin: 48px 0 10px;
+        margin: 64px 0 10px;
         padding: 0;
         font-weight: 700;
       }
+      small:first-of-type {
+        margin: 0 0 10px 0;
+      }
+
       small {
         display: block;
         margin: 0 0 24px 0;
@@ -92,11 +96,14 @@
 
       input[type="text"]:hover,
       textarea[type="text"]:hover,
-      input[type="text"]:active,
-      textarea[type="text"]:active,
-      button:active,
       button:hover {
         outline: none;
+        border: 2px solid #00a4aa;
+        box-shadow: 4px 3px 0 #00a4aa;
+      }
+      input[type="text"]:active,
+      textarea[type="text"]:active,
+      button:active {
         border: 2px solid #00a4aa;
         box-shadow: 6px 4px 0 #00a4aa;
       }
@@ -104,10 +111,10 @@
       #schedule {
         display: grid;
         gap: 10px;
-        grid-template-columns: repeat(auto-fit, minmax(min(90vw, 500px), 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(min(90vw, 400px), 1fr));
         width: 90%;
         max-width: 130ch;
-        margin: 64px auto;
+        margin: 64px auto 200px;
       }
 
       .test-session {
@@ -186,7 +193,7 @@
         z-index: 100;
       }
       .fk:hover {
-        box-shadow: 6px 4px 0 #000;
+        box-shadow: 4px 3px 0 #000;
       }
 
       #tog,
@@ -224,7 +231,7 @@
         z-index: 50;
       }
       .info:hover {
-        box-shadow: 6px 4px 0 #000;
+        box-shadow: 4px 3px 0 #000;
       }
 
       .info > a {
@@ -239,6 +246,27 @@
         position: fixed;
         top: 0;
         right: 0;
+
+        padding: 6px;
+
+        border: 2px solid #000;
+      }
+      .gh > a {
+        text-decoration: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .gh > a > span {
+        color: #000;
+        font-size: 12px;
+        line-height: 1;
+      }
+      .gh > a > svg {
+        width: 14px;
+        height: 14px;
       }
 
       p.err {
@@ -255,7 +283,7 @@
         transition: all 0.2s ease-in-out;
       }
       p.err:hover {
-        box-shadow: 6px 4px 0 #000;
+        box-shadow: 4px 3px 0 #000;
       }
 
       @media (max-width: 600px) {
@@ -266,6 +294,90 @@
           right: unset;
         }
       }
+
+      input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 0;
+        margin: 0;
+        border: none;
+        vertical-align: middle;
+      }
+
+      input[type="checkbox"]:checked::before {
+        background-color: #000;
+      }
+
+      .show-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .checkbox-container {
+        display: block;
+        position: relative;
+        --checkbox-color: #000;
+      }
+
+      .checkbox-container input[type="checkbox"] {
+        display: block;
+        background-color: transparent;
+        padding: 12px;
+        border: 2px solid var(--checkbox-color);
+        box-shadow: 3px 2px 0 #000;
+        transition: all 0.1s ease-out;
+        cursor: pointer;
+        transform: scale(1);
+      }
+      .checkbox-container input[type="checkbox"]:hover {
+        --checkbox-color: #007779;
+        box-shadow: 4px 3px 0 var(--checkbox-color);
+      }
+      .checkbox-container input[type="checkbox"]:active {
+        --checkbox-color: #00a4aa;
+        box-shadow: 6px 4px 0 var(--checkbox-color);
+        transform: scale(1.1);
+      }
+
+      .checkbox-container #checkbox-show-indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        opacity: 0;
+        width: 16px;
+        height: 16px;
+        margin: 6px;
+        background-color: #000;
+        z-index: 20;
+        pointer-events: none;
+        transform: scale(1.1);
+        transition: all 0.1s ease-out;
+      }
+      .checkbox-container #checkbox-show-indicator.checked {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .checkbox-container
+        input[type="checkbox"]:hover
+        + #checkbox-show-indicator {
+        background-color: #007779;
+      }
+      .checkbox-container
+        input[type="checkbox"]:active
+        + #checkbox-show-indicator {
+        background-color: #00a4aa;
+        transform: scale(1.1);
+      }
+
+      .checkbox-container:hover + label {
+        color: #007779;
+      }
     </style>
   </head>
 
@@ -274,14 +386,18 @@
       <a
         class="github-button"
         href="https://github.com/plushugh/examschedule"
-        data-size="large"
-        data-show-count="true"
         aria-label="Star plushugh/examschedule on GitHub"
-        >Star this project on GitHub</a
+        ><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <title>GitHub</title>
+          <path
+            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+          />
+        </svg>
+        <span>Star this project on GitHub</span></a
       >
     </div>
     <h1>查找考试时刻表</h1>
-    <small>Updated Jun 28, 2023, 16:58:50 UTC+8</small>
+    <small>Updated Jun 29, 2023, 11:09:01 UTC+8</small>
     <small>如果查不到，请使用希悦档案的名字查询</small>
     <form>
       <!--
@@ -289,6 +405,13 @@
       -->
       <input type="text" id="student-name" placeholder="请输入学生全名" />
       <button type="submit">查找考试信息</button>
+      <div class="show-group">
+        <div class="checkbox-container">
+          <input type="checkbox" id="checkbox-show" />
+          <div id="checkbox-show-indicator"></div>
+        </div>
+        <label for="checkbox">显示考试其他学生</label>
+      </div>
     </form>
     <div id="schedule"></div>
     <div class="info">
@@ -323,6 +446,23 @@
       </div>
     </div>
     <script>
+      let showCheck = false;
+
+      const showCheckbox = document.querySelector("#checkbox-show");
+      const showCheckboxIndicator = document.querySelector(
+        "#checkbox-show-indicator"
+      );
+
+      showCheckbox.addEventListener("change", () => {
+        if (showCheckbox.checked) {
+          showCheck = true;
+          showCheckboxIndicator.classList.toggle("checked", true);
+        } else {
+          showCheck = false;
+          showCheckboxIndicator.classList.toggle("checked", false);
+        }
+      });
+
       fetch("/testSessionsByStudent.json")
         .then((res) => res.json())
         .then((testSessionsByStudent) => {
@@ -352,11 +492,15 @@
                   <div>${session.subject} ${session.classNum}</div>
                 </div>
 
-                <div>
+                ${
+                  showCheck
+                    ? `<div>
                   <span>考试学生：</span>${
                     session.students && session.students.join(", ")
                   }  <span>共计</span>${session.numOfStudents}<span>人</span>
-                </div>
+                </div>`
+                    : ""
+                }
 
                 <div>
                   <span>考试地点：</span>${session.location}
@@ -384,11 +528,6 @@
       src="https://beamanalytics.b-cdn.net/beam.min.js"
       data-token="7fb81829-48b9-4fb6-9041-c11a9106b3a0"
       async
-    ></script>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <script
-      src="https://js.sentry-cdn.com/43a5ab60e8a840938d607d3e3e18b424.min.js"
-      crossorigin="anonymous"
     ></script>
   </body>
 </html>
