@@ -378,6 +378,198 @@
       .checkbox-container:hover + label {
         color: #007779;
       }
+
+      textarea[type="text"] {
+        transition: none !important;
+      }
+
+      .banner {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 10px;
+      }
+
+      .banner > a {
+        text-decoration: none;
+        color: #00000049;
+        font-size: 100vh;
+        font-weight: 400;
+        line-height: 1;
+        width: min-content;
+      }
+
+      .banner > a:hover {
+        text-decoration: underline;
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0%);
+          color: #ff000049;
+        }
+        2% {
+          color: #ffea0049;
+        }
+        4% {
+          color: #00ff0049;
+        }
+        6% {
+          color: #00ffea49;
+        }
+        8% {
+          color: #0000ff49;
+        }
+        10% {
+          color: #ea00ff49;
+        }
+        12% {
+          color: #ff00ea49;
+        }
+        14% {
+          color: #ff000049;
+        }
+        16% {
+          color: #ffea0049;
+        }
+        18% {
+          color: #00ff0049;
+        }
+        20% {
+          color: #00ffea49;
+        }
+        22% {
+          color: #0000ff49;
+        }
+        24% {
+          color: #ea00ff49;
+        }
+        26% {
+          color: #ff00ea49;
+        }
+        28% {
+          color: #ff000049;
+        }
+        30% {
+          color: #ffea0049;
+        }
+        32% {
+          color: #00ff0049;
+        }
+        34% {
+          color: #00ffea49;
+        }
+        36% {
+          color: #0000ff49;
+        }
+        38% {
+          color: #ea00ff49;
+        }
+        40% {
+          color: #ff00ea49;
+        }
+        42% {
+          color: #ff000049;
+        }
+        44% {
+          color: #ffea0049;
+        }
+        46% {
+          color: #00ff0049;
+        }
+        48% {
+          color: #00ffea49;
+        }
+        50% {
+          color: #0000ff49;
+        }
+        52% {
+          color: #ea00ff49;
+        }
+        54% {
+          color: #ff00ea49;
+        }
+        56% {
+          color: #ff000049;
+        }
+        58% {
+          color: #ffea0049;
+        }
+        60% {
+          color: #00ff0049;
+        }
+        62% {
+          color: #00ffea49;
+        }
+        64% {
+          color: #0000ff49;
+        }
+        66% {
+          color: #ea00ff49;
+        }
+        68% {
+          color: #ff00ea49;
+        }
+        70% {
+          color: #ff000049;
+        }
+        72% {
+          color: #ffea0049;
+        }
+        74% {
+          color: #00ff0049;
+        }
+        76% {
+          color: #00ffea49;
+        }
+        78% {
+          color: #0000ff49;
+        }
+        80% {
+          color: #ea00ff49;
+        }
+        82% {
+          color: #ff00ea49;
+        }
+        84% {
+          color: #ff000049;
+        }
+        86% {
+          color: #ffea0049;
+        }
+        88% {
+          color: #00ff0049;
+        }
+        90% {
+          color: #00ffea49;
+        }
+        92% {
+          color: #0000ff49;
+        }
+        94% {
+          color: #ea00ff49;
+        }
+        96% {
+          color: #ff00ea49;
+        }
+        98% {
+          color: #ff000049;
+        }
+        100% {
+          color: #ffea0049;
+          transform: translateX(-100%);
+        }
+      }
+
+      /* Apply the animation to the <a> tag inside the banner container */
+      .banner a {
+        animation: scroll 6s linear infinite;
+        display: inline-block;
+        white-space: nowrap;
+      }
     </style>
   </head>
 
@@ -444,6 +636,11 @@
           <button type="submit">提交反馈</button>
         </form>
       </div>
+    </div>
+    <div class="banner">
+      <a href="https://www.bilibili.com/video/BV1Vm4y1J78w">
+        在享受本网站吗？点我来看看无线电社团社长的厨艺展示！2年后再度回归！
+      </a>
     </div>
     <script>
       let showCheck = false;
