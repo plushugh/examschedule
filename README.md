@@ -2,7 +2,7 @@
 Look up your test schedules without pain
 
 ## Usage
-Deployed on Netlify: Http://exam.radio-club.org/
+Deployed on Netlify: https://exam.plushugh.com/
 
 ## Building from source
 
