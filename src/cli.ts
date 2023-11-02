@@ -4,6 +4,7 @@ interface TestSession {
   examDate: string;
   examTime: string;
   subject: string;
+  grade: string;
   classNum: string;
   minutes: string;
   location: string;
@@ -27,6 +28,7 @@ export async function processFile(
     for await (const row of csv) {
       const {
         examDate,
+        grade,
         examTime,
         subject,
         classNum,
@@ -51,6 +53,7 @@ export async function processFile(
           examDate: examDate || "INVALID DATE",
           examTime: examTime || "INVALID TIME",
           subject: subject || "INVALID SUBJECT",
+          grade: grade || "INVALID GRADE",
           classNum: classNum || "INVALID CLASS NUMBER",
           minutes: minutes || "INVALID MINUTES",
           location: location || "INVALID LOCATION",
