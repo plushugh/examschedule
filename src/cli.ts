@@ -15,7 +15,8 @@ interface TestSession {
 
 export async function processFile(
   inputFilename: string,
-  outputFilename: string
+  outputFilename: string,
+  studentNamesListOutputFilename: string
 ) {
   const testSessionsByStudent: Record<string, TestSession[]> = {};
 
@@ -64,6 +65,10 @@ export async function processFile(
     // const jsonData = JSON.stringify(testSessionsByStudent, null, 2);
     const jsonData = JSON.stringify(testSessionsByStudent); // Saves precious bytes
 
+    const studentList = Object.keys(testSessionsByStudent).sort().join("\n");
+
+    Deno.writeTextFile(studentNamesListOutputFilename, studentList);
+
     Deno.writeTextFile(outputFilename, jsonData);
   } catch (error) {
     console.error(error);
@@ -74,13 +79,18 @@ export async function processFile(
 if (import.meta.main) {
   const inputFilename = Deno.args[0];
   const outputFilename = Deno.args[1];
+  const studentNamesListOutputFilename = Deno.args[2];
 
-  if (!inputFilename || !outputFilename) {
+  if (!inputFilename || !outputFilename || !studentNamesListOutputFilename) {
     console.error(
-      "Please provide an input and output filename. Example: deno run --allow-read --allow-write src/cli.ts input.csv public/testSessionsByStudent.json"
+      "Please provide an input and output filenames. Example: deno run --allow-read --allow-write src/cli.ts input.csv public/testSessionsByStudent.json public/studentNamesList.txt"
     );
     Deno.exit(1);
   }
 
-  await processFile(inputFilename, outputFilename);
+  await processFile(
+    inputFilename,
+    outputFilename,
+    studentNamesListOutputFilename
+  );
 }
