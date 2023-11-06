@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
@@ -399,6 +399,10 @@
     <h1>查找考试时刻表</h1>
     <small>已经更新2023-2024学年第1学期期中考试，请同学们查收</small>
     <small>Updated Nov 2, 2023, 10:36:50 UTC+8</small>
+    <p style="font-size: 1.5em; text-align: center">
+      声明：本查询平台由2023-2024学年校校级学生会与MicroHenry工作室联合开发，2025届贺佳一
+      Hugh He 2023 © 版权所有
+    </p>
     <small
       >如果查不到，请使用希悦档案的名字查询，并尝试自己名字+毕业学年（如张三2026），如果还是找不到，请以这个文件内的名字查询：<a
         href="/studentNamesList.txt"
@@ -456,7 +460,7 @@
 
       const showCheckbox = document.querySelector("#checkbox-show");
       const showCheckboxIndicator = document.querySelector(
-        "#checkbox-show-indicator"
+        "#checkbox-show-indicator",
       );
 
       showCheckbox.addEventListener("change", () => {
@@ -492,12 +496,12 @@
                 <div>
                   <div>
                     ${dateTime}<br><span>时长：</span> ${
-                  session.minutes
-                } <span>分钟</span>
+                      session.minutes
+                    } <span>分钟</span>
                   </div>
                   <div>${session.subject} ${session.grade} ${
-                  session.classNum
-                }</div>
+                    session.classNum
+                  }</div>
                 </div>
 
                 ${
@@ -516,8 +520,8 @@
 
                 <div>
                   <span>由</span>${session.proctor1}<span>和</span>${
-                  session.proctor2
-                }<span>监考</span>
+                    session.proctor2
+                  }<span>监考</span>
                 </div>
               </div>
             `;
