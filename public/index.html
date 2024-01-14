@@ -1,518 +1,534 @@
 <!doctype html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="description" content="查询个人考试时间和地点" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8"/>
+    <meta content="查询个人考试时间和地点" name="description"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
     <title>Test Schedule</title>
     <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: sans-serif;
-        font-size: 16px;
-      }
-      h1 {
-        text-align: center;
-        font-size: 32px;
-        margin: 64px 0 10px;
-        padding: 0;
-        font-weight: 700;
-      }
-      small:first-of-type {
-        margin: 0 0 10px 0;
-      }
-
-      small {
-        display: block;
-        margin: 0 0 24px 0;
-        text-align: center;
-      }
-
-      form {
-        margin-top: 20px;
-        display: flex;
-        gap: 10px;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-
-      @media (max-width: 600px) {
-        form {
-          flex-direction: column;
-          gap: 20px;
+        * {
+            box-sizing: border-box;
         }
-      }
 
-      form#fk {
-        flex-direction: column;
-        max-width: 60ch;
-        margin: 10px 0 0 0;
-      }
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
 
-      form#fk > textarea {
-        width: 100%;
+        body {
+            font-family: sans-serif;
+            font-size: 16px;
+        }
 
-        box-shadow: none;
-      }
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin: 64px 0 10px;
+            padding: 0;
+            font-weight: 700;
+        }
 
-      button,
-      input {
-        outline: none;
-      }
+        small:first-of-type {
+            margin: 0 0 10px 0;
+        }
 
-      input[type="text"],
-      textarea[type="text"] {
-        padding: 10px;
-        font-size: 14px;
-        line-height: 14px;
-        border: 2px solid #000;
-        box-shadow: 3px 2px 0 #000;
-        transition: all 0.2s ease-in-out;
-      }
+        small {
+            display: block;
+            margin: 0 0 24px 0;
+            text-align: center;
+        }
 
-      button {
-        padding: 10px;
-        font-size: 16px;
-        line-height: 16px;
-        color: black;
-        background-color: #cdfeff;
-        border: 2px solid #007779;
-        box-shadow: 3px 2px 0 #007779;
-        transition: all 0.2s ease-in-out;
-        cursor: pointer;
-      }
+        form {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-      input[type="text"]:hover,
-      textarea[type="text"]:hover,
-      button:hover {
-        outline: none;
-        border: 2px solid #00a4aa;
-        box-shadow: 4px 3px 0 #00a4aa;
-      }
-      input[type="text"]:active,
-      textarea[type="text"]:active,
-      button:active {
-        border: 2px solid #00a4aa;
-        box-shadow: 6px 4px 0 #00a4aa;
-      }
+        @media (max-width: 600px) {
+            form {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
 
-      #schedule {
-        display: grid;
-        gap: 10px;
-        grid-template-columns: repeat(auto-fit, minmax(min(90vw, 400px), 1fr));
-        width: 90%;
-        max-width: 130ch;
-        margin: 64px auto 200px;
-      }
+        form#fk {
+            flex-direction: column;
+            max-width: 60ch;
+            margin: 10px 0 0 0;
+        }
 
-      .test-session {
-        display: grid;
-        align-items: center;
-        background: #fff;
-        padding: 16px;
-        border: 2px solid #000;
-        box-shadow: 3px 2px 0 #000;
-        transition: all 0.2s ease-in-out;
+        form#fk > textarea {
+            width: 100%;
 
-        grid-template-areas:
+            box-shadow: none;
+        }
+
+        button,
+        input {
+            outline: none;
+        }
+
+        input[type="text"],
+        textarea[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+            line-height: 14px;
+            border: 2px solid #000;
+            box-shadow: 3px 2px 0 #000;
+            transition: all 0.2s ease-in-out;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 16px;
+            line-height: 16px;
+            color: black;
+            background-color: #cdfeff;
+            border: 2px solid #007779;
+            box-shadow: 3px 2px 0 #007779;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        input[type="text"]:hover,
+        textarea[type="text"]:hover,
+        button:hover {
+            outline: none;
+            border: 2px solid #00a4aa;
+            box-shadow: 4px 3px 0 #00a4aa;
+        }
+
+        input[type="text"]:active,
+        textarea[type="text"]:active,
+        button:active {
+            border: 2px solid #00a4aa;
+            box-shadow: 6px 4px 0 #00a4aa;
+        }
+
+        #schedule {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(min(90vw, 400px), 1fr));
+            width: 90%;
+            max-width: 130ch;
+            margin: 64px auto 200px;
+        }
+
+        .test-session {
+            display: grid;
+            align-items: center;
+            background: #fff;
+            padding: 16px;
+            border: 2px solid #000;
+            box-shadow: 3px 2px 0 #000;
+            transition: all 0.2s ease-in-out;
+
+            grid-template-areas:
           "meta meta"
           "students students"
           "location proctors";
-      }
-      .test-session:hover {
-        box-shadow: 6px 4px 0 #000;
-      }
-      .test-session > div:first-child {
-        text-align: left;
-        grid-area: meta;
-      }
+        }
 
-      .test-session > div:nth-child(2) {
-        text-align: left;
-        grid-area: students;
-      }
+        .test-session:hover {
+            box-shadow: 6px 4px 0 #000;
+        }
 
-      .test-session > div:nth-last-child(2) {
-        text-align: left;
-        grid-area: location;
-      }
-      .test-session > div:last-child {
-        text-align: right;
-        grid-area: proctors;
-      }
-      @media (max-width: 700px) {
-        .test-session {
-          grid-template-areas:
+        .test-session > div:first-child {
+            text-align: left;
+            grid-area: meta;
+        }
+
+        .test-session > div:nth-child(2) {
+            text-align: left;
+            grid-area: students;
+        }
+
+        .test-session > div:nth-last-child(2) {
+            text-align: left;
+            grid-area: location;
+        }
+
+        .test-session > div:last-child {
+            text-align: right;
+            grid-area: proctors;
+        }
+
+        @media (max-width: 700px) {
+            .test-session {
+                grid-template-areas:
             "meta"
             "students"
             "location"
             "proctors";
+            }
+
+            .test-session > div:last-child {
+                text-align: left;
+                grid-area: proctors;
+            }
         }
-        .test-session > div:last-child {
-          text-align: left;
-          grid-area: proctors;
+
+        span {
+            font-weight: bold;
+            color: #00a4aa;
         }
-      }
 
-      span {
-        font-weight: bold;
-        color: #00a4aa;
-      }
+        .hidden {
+            opacity: 0;
+            display: none;
+            transform: scale(0.2) skew(180deg);
+        }
 
-      .hidden {
-        opacity: 0;
-        display: none;
-        transform: scale(0.2) skew(180deg);
-      }
+        .fk {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            margin: 10px;
+            background-color: #fff;
+            border: 2px solid #000;
+            box-shadow: 3px 2px 0 #000;
+            transition: all 0.2s ease-in-out;
 
-      .fk {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        margin: 10px;
-        background-color: #fff;
-        border: 2px solid #000;
-        box-shadow: 3px 2px 0 #000;
-        transition: all 0.2s ease-in-out;
+            padding: 10px;
+            max-width: 45ch;
 
-        padding: 10px;
-        max-width: 45ch;
+            z-index: 100;
+        }
 
-        z-index: 100;
-      }
-      .fk:hover {
-        box-shadow: 4px 3px 0 #000;
-      }
+        .fk:hover {
+            box-shadow: 4px 3px 0 #000;
+        }
 
-      #tog,
-      #toglabel {
-        cursor: pointer;
-      }
+        #tog,
+        #toglabel {
+            cursor: pointer;
+        }
 
-      #tog,
-      #content {
-        display: none;
-      }
+        #tog,
+        #content {
+            display: none;
+        }
 
-      #toglabel::before {
-        content: "▶";
-      }
+        #toglabel::before {
+            content: "▶";
+        }
 
-      #tog:checked + #toglabel::before {
-        content: "▼";
-      }
+        #tog:checked + #toglabel::before {
+            content: "▼";
+        }
 
-      #tog:checked + #toglabel + #content {
-        display: block;
-      }
+        #tog:checked + #toglabel + #content {
+            display: block;
+        }
 
-      .info {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        background-color: #fff;
-        border: 2px solid #000;
-        box-shadow: 3px 2px 0 #000;
-        transition: all 0.2s ease-in-out;
-        padding: 10px;
-
-        z-index: 50;
-      }
-      .info:hover {
-        box-shadow: 4px 3px 0 #000;
-      }
-
-      .info > a {
-        text-decoration: none;
-      }
-      .info > a:hover {
-        text-decoration: underline;
-      }
-
-      .gh {
-        margin: 10px;
-        position: fixed;
-        top: 0;
-        right: 0;
-
-        padding: 6px;
-
-        border: 2px solid #000;
-      }
-      .gh > a {
-        text-decoration: none;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-      }
-      .gh > a > span {
-        color: #000;
-        font-size: 12px;
-        line-height: 1;
-      }
-      .gh > a > svg {
-        width: 14px;
-        height: 14px;
-      }
-
-      p.err {
-        display: block;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: 2px solid #000;
-        box-shadow: 3px 2px 0 #000;
-        padding: 10px;
-        font-size: 24px;
-        font-weight: 700;
-        transition: all 0.2s ease-in-out;
-      }
-      p.err:hover {
-        box-shadow: 4px 3px 0 #000;
-      }
-
-      @media (max-width: 600px) {
         .info {
-          bottom: 66.5px;
-          left: 0;
-          margin: 10px;
-          right: unset;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #fff;
+            border: 2px solid #000;
+            box-shadow: 3px 2px 0 #000;
+            transition: all 0.2s ease-in-out;
+            padding: 10px;
+
+            z-index: 50;
         }
-      }
 
-      input[type="checkbox"] {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        padding: 0;
-        margin: 0;
-        border: none;
-        vertical-align: middle;
-      }
+        .info:hover {
+            box-shadow: 4px 3px 0 #000;
+        }
 
-      input[type="checkbox"]:checked::before {
-        background-color: #000;
-      }
+        .info > a {
+            text-decoration: none;
+        }
 
-      .show-group {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-      }
+        .info > a:hover {
+            text-decoration: underline;
+        }
 
-      .checkbox-container {
-        display: block;
-        position: relative;
-        --checkbox-color: #000;
-      }
+        .gh {
+            margin: 10px;
+            position: fixed;
+            top: 0;
+            right: 0;
 
-      .checkbox-container input[type="checkbox"] {
-        display: block;
-        background-color: transparent;
-        padding: 12px;
-        border: 2px solid var(--checkbox-color);
-        box-shadow: 3px 2px 0 #000;
-        transition: all 0.1s ease-out;
-        cursor: pointer;
-        transform: scale(1);
-      }
-      .checkbox-container input[type="checkbox"]:hover {
-        --checkbox-color: #007779;
-        box-shadow: 4px 3px 0 var(--checkbox-color);
-      }
-      .checkbox-container input[type="checkbox"]:active {
-        --checkbox-color: #00a4aa;
-        box-shadow: 6px 4px 0 var(--checkbox-color);
-        transform: scale(1.1);
-      }
+            padding: 6px;
 
-      .checkbox-container #checkbox-show-indicator {
-        position: absolute;
-        top: 0;
-        left: 0;
-        display: block;
-        opacity: 0;
-        width: 16px;
-        height: 16px;
-        margin: 6px;
-        background-color: #000;
-        z-index: 20;
-        pointer-events: none;
-        transform: scale(1.1);
-        transition: all 0.1s ease-out;
-      }
-      .checkbox-container #checkbox-show-indicator.checked {
-        opacity: 1;
-        transform: scale(1);
-      }
+            border: 2px solid #000;
+        }
 
-      .checkbox-container
+        .gh > a {
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .gh > a > span {
+            color: #000;
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .gh > a > svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        p.err {
+            display: block;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #000;
+            box-shadow: 3px 2px 0 #000;
+            padding: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            transition: all 0.2s ease-in-out;
+        }
+
+        p.err:hover {
+            box-shadow: 4px 3px 0 #000;
+        }
+
+        @media (max-width: 600px) {
+            .info {
+                bottom: 66.5px;
+                left: 0;
+                margin: 10px;
+                right: unset;
+            }
+        }
+
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 0;
+            margin: 0;
+            border: none;
+            vertical-align: middle;
+        }
+
+        input[type="checkbox"]:checked::before {
+            background-color: #000;
+        }
+
+        .show-group {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-container {
+            display: block;
+            position: relative;
+            --checkbox-color: #000;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            display: block;
+            background-color: transparent;
+            padding: 12px;
+            border: 2px solid var(--checkbox-color);
+            box-shadow: 3px 2px 0 #000;
+            transition: all 0.1s ease-out;
+            cursor: pointer;
+            transform: scale(1);
+        }
+
+        .checkbox-container input[type="checkbox"]:hover {
+            --checkbox-color: #007779;
+            box-shadow: 4px 3px 0 var(--checkbox-color);
+        }
+
+        .checkbox-container input[type="checkbox"]:active {
+            --checkbox-color: #00a4aa;
+            box-shadow: 6px 4px 0 var(--checkbox-color);
+            transform: scale(1.1);
+        }
+
+        .checkbox-container #checkbox-show-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            opacity: 0;
+            width: 16px;
+            height: 16px;
+            margin: 6px;
+            background-color: #000;
+            z-index: 20;
+            pointer-events: none;
+            transform: scale(1.1);
+            transition: all 0.1s ease-out;
+        }
+
+        .checkbox-container #checkbox-show-indicator.checked {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .checkbox-container
         input[type="checkbox"]:hover
         + #checkbox-show-indicator {
-        background-color: #007779;
-      }
-      .checkbox-container
+            background-color: #007779;
+        }
+
+        .checkbox-container
         input[type="checkbox"]:active
         + #checkbox-show-indicator {
-        background-color: #00a4aa;
-        transform: scale(1.1);
-      }
+            background-color: #00a4aa;
+            transform: scale(1.1);
+        }
 
-      .checkbox-container:hover + label {
-        color: #007779;
-      }
+        .checkbox-container:hover + label {
+            color: #007779;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
-    <div class="gh">
-      <a
-        class="github-button"
-        href="https://github.com/plushugh/examschedule"
-        aria-label="Star plushugh/examschedule on GitHub"
-        ><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <title>GitHub</title>
-          <path
-            d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-          />
+<body>
+<div class="gh">
+    <a
+            aria-label="Star plushugh/examschedule on GitHub"
+            class="github-button"
+            href="https://github.com/plushugh/examschedule"
+    >
+        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <title>GitHub</title>
+            <path
+                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
+            />
         </svg>
         <span>Star this project on GitHub</span></a
-      >
-    </div>
-    <h1>查找考试时刻表</h1>
-    <small>已经更新2023-2024学年第1学期期中考试，请同学们查收</small>
-    <small>Updated Nov 2, 2023, 10:36:50 UTC+8</small>
-    <p style="font-size: 1.5em; text-align: center">
-      声明：本查询平台由2023-2024学年校校级学生会与MicroHenry工作室联合开发，2025届贺佳一
-      Hugh He 2023 © 版权所有
-    </p>
-    <small
-      >如果查不到，请使用希悦档案的名字查询，并尝试自己名字+毕业学年（如张三2026），如果还是找不到，请以这个文件内的名字查询：<a
-        href="/studentNamesList.txt"
-        >studentNamesList.txt</a
-      ></small
     >
-    <form>
-      <!--
-      <label for="student-name">输入学生全名：</label>
-      -->
-      <input type="text" id="student-name" placeholder="请输入学生全名" />
-      <button type="submit">查找考试信息</button>
-      <div class="show-group">
+</div>
+<h1>查找考试时刻表</h1>
+<small>已经更新2023-2024学年第1学期期末考试，请同学们查收</small>
+<small>Updated Jan 9, 2023, 16:52:01 UTC+8</small>
+<small
+>如果查不到，请使用希悦档案的名字查询，并尝试自己名字+毕业学年（如张三2026），如果还是找不到，请以这个文件内的名字查询：<a
+        href="/studentNamesList.txt"
+>studentNamesList.txt</a
+></small
+>
+<form>
+    <!--
+    <label for="student-name">输入学生全名：</label>
+    -->
+    <input id="student-name" placeholder="请输入学生全名" type="text"/>
+    <button type="submit">查找考试信息</button>
+    <div class="show-group">
         <div class="checkbox-container">
-          <input type="checkbox" id="checkbox-show" />
-          <div id="checkbox-show-indicator"></div>
+            <input id="checkbox-show" type="checkbox"/>
+            <div id="checkbox-show-indicator"></div>
         </div>
         <label for="checkbox-show">显示考试其他学生</label>
-      </div>
-    </form>
-    <div id="schedule"></div>
-    <div class="info">
-      这是一个
-      <a href="https://fsf.org">自由软件</a>
-      项目，由
-      <a href="https://github.com/plushugh/examschedule">@plushugh</a>
-      开发
     </div>
-    <div class="fk">
-      <input type="checkbox" id="tog" />
-      <label id="toglabel" for="tog">反馈/免责声明</label>
-      <div id="content">
+</form>
+<div id="schedule"></div>
+<div class="info">
+    这是一个
+    <a href="https://fsf.org">自由软件</a>
+    项目，由
+    <a href="https://github.com/plushugh/examschedule">@plushugh</a>
+    开发
+</div>
+<div class="fk">
+    <input id="tog" type="checkbox"/>
+    <label for="tog" id="toglabel">反馈/免责声明</label>
+    <div id="content">
         <p>
-          免责声明：本服务提供的考试信息仅供参考，不一定反映真实考试信息，具体请参照官方公布的考试信息。
+            免责声明：本服务提供的考试信息仅供参考，不一定反映真实考试信息，具体请参照官方公布的考试信息。
         </p>
-        <form netlify netlify-honeypot="bot-field" id="fk">
-          <p class="hidden">
-            <label>
-              如果你是人类，请不要填写此框: <input name="bot-field" />
-            </label>
-          </p>
-          <textarea
-            type="text"
-            name="fankui"
-            placeholder="请输入反馈"
-            rows="10"
-            resize="false"
-          ></textarea>
-          <button type="submit">提交反馈</button>
+        <form id="fk" netlify netlify-honeypot="bot-field">
+            <p class="hidden">
+                <label>
+                    如果你是人类，请不要填写此框: <input name="bot-field"/>
+                </label>
+            </p>
+            <textarea
+                    name="fankui"
+                    placeholder="请输入反馈"
+                    resize="false"
+                    rows="10"
+                    type="text"
+            ></textarea>
+            <button type="submit">提交反馈</button>
         </form>
-      </div>
     </div>
-    <script>
-      let showCheck = false;
+</div>
+<script>
+    let showCheck = false;
 
-      const showCheckbox = document.querySelector("#checkbox-show");
-      const showCheckboxIndicator = document.querySelector(
+    const showCheckbox = document.querySelector("#checkbox-show");
+    const showCheckboxIndicator = document.querySelector(
         "#checkbox-show-indicator",
-      );
+    );
 
-      showCheckbox.addEventListener("change", () => {
+    showCheckbox.addEventListener("change", () => {
         if (showCheckbox.checked) {
-          showCheck = true;
-          showCheckboxIndicator.classList.toggle("checked", true);
+            showCheck = true;
+            showCheckboxIndicator.classList.toggle("checked", true);
         } else {
-          showCheck = false;
-          showCheckboxIndicator.classList.toggle("checked", false);
+            showCheck = false;
+            showCheckboxIndicator.classList.toggle("checked", false);
         }
-      });
+    });
 
-      fetch("/testSessionsByStudent.json")
+    fetch("/testSessionsByStudent.json")
         .then((res) => res.json())
         .then((testSessionsByStudent) => {
-          const form = document.querySelector("form");
-          const schedule = document.querySelector("#schedule");
+            const form = document.querySelector("form");
+            const schedule = document.querySelector("#schedule");
 
-          form.addEventListener("submit", (event) => {
-            event.preventDefault();
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
 
-            schedule.innerHTML = "";
+                schedule.innerHTML = "";
 
-            const studentName = document.querySelector("#student-name").value;
+                const studentName = document.querySelector("#student-name").value;
 
-            const testSessions = testSessionsByStudent[studentName];
+                const testSessions = testSessionsByStudent[studentName];
 
-            if (testSessions) {
-              for (const session of testSessions) {
-                const dateTime = `${session["examDate"]} ${session.examTime}`;
-                schedule.innerHTML += `
+                if (testSessions) {
+                    for (const session of testSessions) {
+                        const dateTime = `${session["examDate"]} ${session.examTime}`;
+                        schedule.innerHTML += `
               <div class="test-session">
                 <div>
                   <div>
                     ${dateTime}<br><span>时长：</span> ${
-                      session.minutes
-                    } <span>分钟</span>
+                            session.minutes
+                        } <span>分钟</span>
                   </div>
                   <div>${session.subject} ${session.grade} ${
-                    session.classNum
-                  }</div>
+                            session.classNum
+                        }</div>
                 </div>
 
                 ${
-                  showCheck
-                    ? `<div>
+                            showCheck
+                                ? `<div>
                   <span>考试学生：</span>${
-                    session.students && session.students.join(", ")
-                  }  <span>共计</span>${session.numOfStudents}<span>人</span>
+                                    session.students && session.students.join(", ")
+                                }  <span>共计</span>${session.numOfStudents}<span>人</span>
                 </div>`
-                    : ""
-                }
+                                : ""
+                        }
 
                 <div>
                   <span>考试地点：</span>${session.location}
@@ -520,26 +536,26 @@
 
                 <div>
                   <span>由</span>${session.proctor1}<span>和</span>${
-                    session.proctor2
-                  }<span>监考</span>
+                            session.proctor2
+                        }<span>监考</span>
                 </div>
               </div>
             `;
-              }
-            } else {
-              schedule.innerHTML = '<p class="err">没有查找到考试信息</p>';
-            }
-          });
+                    }
+                } else {
+                    schedule.innerHTML = '<p class="err">没有查找到考试信息</p>';
+                }
+            });
         })
         .catch((err) => {
-          document.querySelector("body").innerHTML =
-            '<p class="err">无法获取考试信息</p>';
+            document.querySelector("body").innerHTML =
+                '<p class="err">无法获取考试信息</p>';
         });
-    </script>
-    <script
-      src="https://beamanalytics.b-cdn.net/beam.min.js"
-      data-token="7fb81829-48b9-4fb6-9041-c11a9106b3a0"
-      async
-    ></script>
-  </body>
+</script>
+<script
+        async
+        data-token="7fb81829-48b9-4fb6-9041-c11a9106b3a0"
+        src="https://beamanalytics.b-cdn.net/beam.min.js"
+></script>
+</body>
 </html>

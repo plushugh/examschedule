@@ -10,10 +10,6 @@
   ],
   "license": "MIT",
   "scripts": {
-    "generate-json": "deno run --allow-read --allow-write src/cli.ts input.csv public/testSessionsByStudent.json public/studentNamesList.txt",
-    "strip-bom": "strip-bom source.csv > input.csv"
-  },
-  "devDependencies": {
-    "strip-bom-cli": "^2.0.0"
+    "generate-json": "deno run --allow-read --allow-write src/cli.ts input.csv public/testSessionsByStudent.json public/studentNamesList.txt"
   }
 }
