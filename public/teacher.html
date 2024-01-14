@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="utf-8"/>
     <meta content="查询个人考试时间和地点(监考版）" name="description"/>
@@ -131,9 +132,9 @@
             transition: all 0.2s ease-in-out;
 
             grid-template-areas:
-          "meta meta"
-          "students students"
-          "location proctors";
+                "meta meta"
+                "students students"
+                "location proctors";
         }
 
         .test-session:hover {
@@ -163,10 +164,10 @@
         @media (max-width: 700px) {
             .test-session {
                 grid-template-areas:
-            "meta"
-            "students"
-            "location"
-            "proctors";
+                    "meta"
+                    "students"
+                    "location"
+                    "proctors";
             }
 
             .test-session > div:last-child {
@@ -382,15 +383,11 @@
             transform: scale(1);
         }
 
-        .checkbox-container
-        input[type="checkbox"]:hover
-        + #checkbox-show-indicator {
+        .checkbox-container input[type="checkbox"]:hover + #checkbox-show-indicator {
             background-color: #007779;
         }
 
-        .checkbox-container
-        input[type="checkbox"]:active
-        + #checkbox-show-indicator {
+        .checkbox-container input[type="checkbox"]:active + #checkbox-show-indicator {
             background-color: #00a4aa;
             transform: scale(1.1);
         }
@@ -399,37 +396,29 @@
             color: #007779;
         }
     </style>
+    <link href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 </head>
 
 <body>
 <div class="gh">
-    <a
-            aria-label="Star plushugh/examschedule on GitHub"
-            class="github-button"
-            href="https://github.com/plushugh/examschedule"
-    >
+    <a aria-label="Star plushugh/examschedule on GitHub" class="github-button"
+       href="https://github.com/plushugh/examschedule">
         <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <title>GitHub</title>
             <path
-                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
-            />
+                    d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
         </svg>
-        <span>Star this project on GitHub</span></a
-    >
+        <span>Star this project on GitHub</span></a>
 </div>
 <h1>查找考试时刻表（监考版）<br> Find Proctoring Sessions</h1>
 <small>已经更新2023-2024学年第1学期期末考试，请老师们查收<br>Updated for 2023-2024 school year 1st semester final
     exams</small>
 <small>Data Updated Jan 11, 2024, 12:10:00 UTC+8</small>
-<small
->如果查不到，请使用以下列表内的名字查询：<a
-        href="/proctorNamesList.txt"
->proctorNamesList.txt</a
-><br>If you cannot find any exams to proctor, please see the names in this file：<a
-        href="/proctorNamesList.txt"
->proctorNamesList.txt</a
-></small
->
+<small>如果查不到，请使用以下列表内的名字查询：<a href="/proctorNamesList.txt">proctorNamesList.txt</a><br>If you cannot
+    find any exams
+    to proctor, please see the names in this file：<a href="/proctorNamesList.txt">proctorNamesList.txt</a></small>
 <form>
     <input id="proctor-name" placeholder="请输入教师全名 Please enter full name" type="text"/>
     <button type="submit">查找考试信息 Find Test Sessions</button>
@@ -471,13 +460,8 @@
                     如果你是人类，请不要填写此框: If you are human, do not click this field: <input name="bot-field"/>
                 </label>
             </p>
-            <textarea
-                    name="fankui"
-                    placeholder="请输入反馈 Enter your feedback"
-                    resize="false"
-                    rows="10"
-                    type="text"
-            ></textarea>
+            <textarea name="fankui" placeholder="请输入反馈 Enter your feedback" resize="false" rows="10"
+                      type="text"></textarea>
             <button type="submit">提交反馈 Submit Feedback</button>
         </form>
     </div>
@@ -506,6 +490,14 @@
             const form = document.querySelector("form");
             const schedule = document.querySelector("#schedule");
 
+            const proctorNames = Object.keys(testSessionsByProctor);
+
+            $(document).ready(function () {
+                $("#proctor-name").autocomplete({
+                    source: proctorNames
+                });
+            });
+
             form.addEventListener("submit", (event) => {
                 event.preventDefault();
 
@@ -522,23 +514,19 @@
               <div class="test-session">
                 <div>
                   <div>
-                    ${dateTime}<br><span>时长 Exam length：</span> ${
-                            session.minutes
+                    ${dateTime}<br><span>时长 Exam length：</span> ${session.minutes
                         } <span>分钟 Minutes</span>
                   </div>
-                  <div>${session.subject} ${session.grade} ${
-                            session.classNum
+                  <div>${session.subject} ${session.grade} ${session.classNum
                         }</div>
                 </div>
 
-                ${
-                            showCheck
-                                ? `<div>
-                  <span>考试学生 Students：</span>${
-                                    session.students && session.students.join(", ")
-                                }  <span>共计</span>${session.numOfStudents}<span>人</span>
+                ${showCheck
+                            ? `<div>
+                  <span>考试学生 Students：</span>${session.students && session.students.join(", ")
+                            }  <span>共计</span>${session.numOfStudents}<span>人</span>
                 </div>`
-                                : ""
+                            : ""
                         }
 
                 <div>
@@ -546,8 +534,7 @@
                 </div>
 
                 <div>
-                  <span>由 Proctored by</span>${session.proctor1}<span>和</span>${
-                            session.proctor2
+                  <span>由 Proctored by</span>${session.proctor1}<span>和</span>${session.proctor2
                         }<span>监考</span>
                 </div>
               </div>
@@ -563,10 +550,8 @@
                 '<p class="err">无法获取考试信息<br>Unable to find test sessions</p>';
         });
 </script>
-<script
-        async
-        data-token="7fb81829-48b9-4fb6-9041-c11a9106b3a0"
-        src="https://beamanalytics.b-cdn.net/beam.min.js"
-></script>
+<script async data-token="7fb81829-48b9-4fb6-9041-c11a9106b3a0"
+        src="https://beamanalytics.b-cdn.net/beam.min.js"></script>
 </body>
+
 </html>
