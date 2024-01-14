@@ -67,3 +67,5 @@ typings/
 testbom.csv
 testSessionsByStudent.json
 studentNamesList.txt
+
+.DS_Store
