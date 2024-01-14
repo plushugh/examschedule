@@ -105,6 +105,9 @@ export async function processFile(
                     acc[key] = curr;
                 } else {
                     acc[key].students = [...acc[key].students, ...curr.students];
+                    if (acc[key].subject !== curr.subject) {
+                        acc[key].subject = [...new Set([...acc[key].subject.split(","), ...curr.subject.split(",")])].join(",");
+                    }
                     acc[key].classNum = [...new Set([...acc[key].classNum.split(","), ...curr.classNum.split(",")])].join(",");
                     acc[key].numOfStudents = [...new Set([...acc[key].numOfStudents.split(","), ...curr.numOfStudents.split(",")])].join(",");
                 }
