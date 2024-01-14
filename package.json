@@ -10,6 +10,6 @@
   ],
   "license": "MIT",
   "scripts": {
-    "generate-json": "deno run --allow-read --allow-write src/cli.ts input.csv public/testSessionsByStudent.json public/studentNamesList.txt"
+    "generate-json": "deno run --allow-read --allow-write src/cli.ts input.csv public/testSessionsByStudent.json public/studentNamesList.txt public/testSessionsByProctor.json public/proctorNamesList.txt"
   }
 }

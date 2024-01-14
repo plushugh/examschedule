@@ -1,6 +1,6 @@
 # Examschedule
 
-Look up your test schedules without pain
+Look up your test schedules and proctoring sessions without pain
 
 ## Usage
 
@@ -58,19 +58,20 @@ examDate,examTime,subject,grade,classNum,minutes,location,proctor1,proctor2,numO
 
 1. rename csv as `input.csv` and copy to this folder
 
-#### Generate preindexed json
+#### Generate preindexed jsons
 
 ```bash
 npm run generate-json
 
 # or
 
-deno run --allow-read --allow-write src/cli.ts input.csv public/testSessionsByStudent.json public/studentNamesList.txt
+deno run --allow-read --allow-write src/cli.ts input.csv public/testSessionsByStudent.json public/studentNamesList.txt public/testSessionsByProctor.json public/proctorNamesList.txt
 ```
 
-> this npm script reads `input.csv` and generates a new file in `public/` as `testSessionsByStudent.json` and
-> a `studentNamesList.txt`
+> this npm script reads `input.csv` and generates new files in `public/`
+> as `testSessionsByStudent.json`, `testSessionsByProctor.json`, `proctorNamesList.txt` and
+> `studentNamesList.txt`
 
 #### Deploy webapp from `public/` directory
 
-Use netlify, since this app uses netlify forms for form collection.
+Use netlify, since this app uses netlify forms for feedback form collection.

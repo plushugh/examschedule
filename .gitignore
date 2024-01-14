@@ -67,5 +67,6 @@ typings/
 testbom.csv
 testSessionsByStudent.json
 studentNamesList.txt
-
+proctorNamesList.txt
+testSessionsByProctor.json
 .DS_Store

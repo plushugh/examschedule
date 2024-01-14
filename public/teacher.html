@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8"/>
-    <meta content="查询个人考试时间和地点" name="description"/>
+    <meta content="查询个人考试时间和地点(监考版）" name="description"/>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-    <title>Test Schedule</title>
+    <title>Test Schedule (Proctor Edition)</title>
     <style>
         * {
             box-sizing: border-box;
@@ -82,6 +82,7 @@
             border: 2px solid #000;
             box-shadow: 3px 2px 0 #000;
             transition: all 0.2s ease-in-out;
+            width: 35ch;
         }
 
         button {
@@ -416,30 +417,28 @@
         <span>Star this project on GitHub</span></a
     >
 </div>
-<h1>查找考试时刻表</h1>
-<small>已经更新2023-2024学年第1学期期末考试，请同学们查收</small>
+<h1>查找考试时刻表（监考版）<br> Find Proctoring Sessions</h1>
+<small>已经更新2023-2024学年第1学期期末考试，请老师们查收<br>Updated for 2023-2024 school year 1st semester final
+    exams</small>
 <small>Updated Jan 11, 2024, 12:10:00 UTC+8</small>
 <small
->如果查不到，请使用希悦档案的名字查询，并尝试自己名字+毕业学年（如张三2026），如果还是找不到，请以这个文件内的名字查询：<a
-        href="/studentNamesList.txt"
->studentNamesList.txt</a
+>如果查不到，请使用以下列表内的名字查询：<a
+        href="/proctorNamesList.txt"
+>proctorNamesList.txt</a
+><br>If you cannot find any exams to proctor, please see the names in this file：<a
+        href="/proctorNamesList.txt"
+>proctorNamesList.txt</a
 ></small
 >
-<p style="color: #007779; text-align: center">【新开放】教师监考查询：请访问<a href="/teacher.html">此页面</a><br>
-    [New Feature] Proctor Sessions Lookup: Please visit <a href="/teacher.html">here</a>
-</p>
 <form>
-    <!--
-    <label for="student-name">输入学生全名：</label>
-    -->
-    <input id="student-name" placeholder="请输入学生全名" type="text"/>
-    <button type="submit">查找考试信息</button>
+    <input id="proctor-name" placeholder="请输入教师全名 Please enter full name" type="text"/>
+    <button type="submit">查找考试信息 Find Test Sessions</button>
     <div class="show-group">
         <div class="checkbox-container">
             <input id="checkbox-show" type="checkbox"/>
             <div id="checkbox-show-indicator"></div>
         </div>
-        <label for="checkbox-show">显示考试其他学生</label>
+        <label for="checkbox-show">显示考试学生 Show students in test sessions</label>
     </div>
 </form>
 <div id="schedule"></div>
@@ -449,28 +448,37 @@
     项目，由
     <a href="https://github.com/plushugh/examschedule">@plushugh</a>
     开发
+    <br>
+    This is a
+    <a href="https://fsf.org">Free Software</a>
+    Project, developed by
+    <a href="https://github.com/plushugh/examschedule">@plushugh</a>
+    on GitHub
 </div>
 <div class="fk">
     <input id="tog" type="checkbox"/>
-    <label for="tog" id="toglabel">反馈/免责声明</label>
+    <label for="tog" id="toglabel">反馈/免责声明 Feedback/Disclaimer</label>
     <div id="content">
         <p>
             免责声明：本服务提供的考试信息仅供参考，不一定反映真实考试信息，具体请参照官方公布的考试信息。
+            <br>
+            Disclaimer: The exam information provided by this service is for reference only and does not necessarily
+            reflect the actual exam information. Please refer to the official exam information for details.
         </p>
         <form id="fk" netlify netlify-honeypot="bot-field">
             <p class="hidden">
                 <label>
-                    如果你是人类，请不要填写此框: <input name="bot-field"/>
+                    如果你是人类，请不要填写此框: If you are human, do not click this field: <input name="bot-field"/>
                 </label>
             </p>
             <textarea
                     name="fankui"
-                    placeholder="请输入反馈"
+                    placeholder="请输入反馈 Enter your feedback"
                     resize="false"
                     rows="10"
                     type="text"
             ></textarea>
-            <button type="submit">提交反馈</button>
+            <button type="submit">提交反馈 Submit Feedback</button>
         </form>
     </div>
 </div>
@@ -492,9 +500,9 @@
         }
     });
 
-    fetch("/testSessionsByStudent.json")
+    fetch("/testSessionsByProctor.json")
         .then((res) => res.json())
-        .then((testSessionsByStudent) => {
+        .then((testSessionsByProctor) => {
             const form = document.querySelector("form");
             const schedule = document.querySelector("#schedule");
 
@@ -503,9 +511,9 @@
 
                 schedule.innerHTML = "";
 
-                const studentName = document.querySelector("#student-name").value;
+                const proctorName = document.querySelector("#proctor-name").value;
 
-                const testSessions = testSessionsByStudent[studentName];
+                const testSessions = testSessionsByProctor[proctorName];
 
                 if (testSessions) {
                     for (const session of testSessions) {
@@ -514,9 +522,9 @@
               <div class="test-session">
                 <div>
                   <div>
-                    ${dateTime}<br><span>时长：</span> ${
+                    ${dateTime}<br><span>时长 Exam length：</span> ${
                             session.minutes
-                        } <span>分钟</span>
+                        } <span>分钟 Minutes</span>
                   </div>
                   <div>${session.subject} ${session.grade} ${
                             session.classNum
@@ -526,7 +534,7 @@
                 ${
                             showCheck
                                 ? `<div>
-                  <span>考试学生：</span>${
+                  <span>考试学生 Students：</span>${
                                     session.students && session.students.join(", ")
                                 }  <span>共计</span>${session.numOfStudents}<span>人</span>
                 </div>`
@@ -534,11 +542,11 @@
                         }
 
                 <div>
-                  <span>考试地点：</span>${session.location}
+                  <span>考试地点 Location：</span>${session.location}
                 </div>
 
                 <div>
-                  <span>由</span>${session.proctor1}<span>和</span>${
+                  <span>由 Proctored by</span>${session.proctor1}<span>和</span>${
                             session.proctor2
                         }<span>监考</span>
                 </div>
@@ -546,13 +554,13 @@
             `;
                     }
                 } else {
-                    schedule.innerHTML = '<p class="err">没有查找到考试信息</p>';
+                    schedule.innerHTML = '<p class="err">没有查找到考试信息<br>No test session found</p>';
                 }
             });
         })
         .catch((err) => {
             document.querySelector("body").innerHTML =
-                '<p class="err">无法获取考试信息</p>';
+                '<p class="err">无法获取考试信息<br>Unable to find test sessions</p>';
         });
 </script>
 <script
