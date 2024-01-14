@@ -1,4 +1,4 @@
-import {parse} from "https://deno.land/std@0.192.0/csv/mod.ts";
+import { parse } from "https://deno.land/std@0.192.0/csv/mod.ts";
 
 interface TestSession {
     examDate: string;
@@ -26,7 +26,7 @@ export async function processFile(
 
     try {
         const file = await Deno.readTextFile(inputFilename);
-        const csv = parse(file, {trimLeadingSpace: true, skipFirstRow: true}); // Skip the first row of the CSV file (headers) and trim leading spaces, the first row will then be used as the keys for the returned object
+        const csv = parse(file, { trimLeadingSpace: true, skipFirstRow: true }); // Skip the first row of the CSV file (headers) and trim leading spaces, the first row will then be used as the keys for the returned object
 
         for await (const row of csv) {
             const {
@@ -95,12 +95,31 @@ export async function processFile(
             });
         }
 
+        // const dedup = Object.fromEntries(Object.entries(testSessionsByProctor).map(([proc, sesss]) => [proc, [...new Set(sesss)]]));
+        // merge test sessions for each proctor by same date an time
+        const dedup: Record<string, TestSession[]> = {};
+        Object.entries(testSessionsByProctor).forEach(([proc, sesss]) => {
+            const deduped = sesss.reduce((acc, curr) => {
+                const key = `${curr.examDate}-${curr.examTime}`;
+                if (!acc[key]) {
+                    acc[key] = curr;
+                } else {
+                    acc[key].students = [...acc[key].students, ...curr.students];
+                    acc[key].classNum = [...new Set([...acc[key].classNum.split(","), ...curr.classNum.split(",")])].join(",");
+                    acc[key].numOfStudents = [...new Set([...acc[key].numOfStudents.split(","), ...curr.numOfStudents.split(",")])].join(",");
+                }
+                return acc;
+            }, {} as Record<string, TestSession>);
+
+            dedup[proc] = Object.values(deduped);
+        });
+
         // const jsonData = JSON.stringify(testSessionsByStudent, null, 2);
         const jsonData = JSON.stringify(testSessionsByStudent); // Saves precious bytes
-        const jsonDataProctor = JSON.stringify(testSessionsByProctor); // Saves precious bytes
+        const jsonDataProctor = JSON.stringify(dedup); // Saves precious bytes
 
         const studentList = Object.keys(testSessionsByStudent).sort().join("\n");
-        const proctorList = Object.keys(testSessionsByProctor).sort().join("\n");
+        const proctorList = Object.keys(dedup).sort().join("\n");
 
         Deno.writeTextFile(studentNamesListOutputFilename, studentList);
         Deno.writeTextFile(proctorNamesListOutputFilename, proctorList);
